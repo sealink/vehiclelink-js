@@ -4,8 +4,8 @@
   "description": "VehicleLink JS SDK",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage",
+    "test": "jest --passWithNoTests",
+    "coverage": "jest --coverage --passWithNoTests",
     "prettier": "prettier --ignore-unknown --check *",
     "prettier:write": "prettier --ignore-unknown --write *"
   },
