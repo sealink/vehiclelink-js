@@ -26,7 +26,7 @@ export default {
     {
       file: pkg.main,
       format: 'cjs',
-      name: 'vehiclelink-js',
+      name: 'vehiclelink',
       sourcemap: true,
     },
     {
