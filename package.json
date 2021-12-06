@@ -1,0 +1,27 @@
+{
+  "name": "@sealink/vehiclelink",
+  "version": "0.0.1",
+  "description": "VehicleLink JS SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sealink/vehiclelink-js.git"
+  },
+  "author": "SeaLink Travel Group",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sealink/vehiclelink-js/issues"
+  },
+  "homepage": "https://github.com/sealink/vehiclelink-js#readme",
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
+    "prettier": "2.5.1"
+  }
+}
