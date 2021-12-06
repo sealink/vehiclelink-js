@@ -2,8 +2,14 @@
   "name": "@sealink/vehiclelink",
   "version": "0.0.1",
   "description": "VehicleLink JS SDK",
-  "main": "index.js",
+  "main": "dist/vehiclelink.js",
+  "module": "dist/vehiclelink.mjs",
+  "jsnext:main": "dist/vehiclelink.mjs",
   "scripts": {
+    "build": "rollup -c --environment BUILD:production",
+    "watch": "rollup -c -w",
+    "pretest": "rollup -c",
+    "prepublish": "BUILD=production npm test",
     "test": "jest --passWithNoTests",
     "coverage": "jest --coverage --passWithNoTests",
     "prettier": "prettier --ignore-unknown --check *",
@@ -23,14 +29,25 @@
   },
   "homepage": "https://github.com/sealink/vehiclelink-js#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.16.4",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "coveralls": "^3.1.1",
     "husky": "^7.0.4",
+    "isomorphic-fetch": "^3.0.0",
     "jest": "^27.4.3",
     "lint-staged": "^12.1.2",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "rollup": "^2.60.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-istanbul": "^3.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
   },
   "engines": {
     "node": "^12 || ^14 || ^16"
   },
+  "browserslist": "> 0.25%, not dead",
+  "prettier": "@sealink/prettier-config",
   "jest": {
     "testEnvironment": "jsdom"
   }
