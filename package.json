@@ -13,7 +13,8 @@
     "test": "jest --passWithNoTests",
     "coverage": "jest --coverage --passWithNoTests",
     "prettier": "prettier --ignore-unknown --check *",
-    "prettier:write": "prettier --ignore-unknown --write *"
+    "prettier:write": "prettier --ignore-unknown --write *",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*": "prettier --ignore-unknown --write"
