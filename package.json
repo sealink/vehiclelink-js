@@ -21,7 +21,14 @@
   "homepage": "https://github.com/sealink/vehiclelink-js#readme",
   "devDependencies": {
     "husky": "^7.0.4",
+    "jest": "^27.4.3",
     "lint-staged": "^12.1.2",
     "prettier": "2.5.1"
+  },
+  "engines": {
+    "node": "^12 || ^14 || ^16"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   }
 }
