@@ -14,7 +14,7 @@ Provides a wrapper api which hides the underlying vehiclelink services.
 
 ### Deployment
 
-Build / Deployment is handled via travis CI.
+Build / Deployment is handled via Github actions.
 Package management is via NPM.
 
 First create the release branch
@@ -25,7 +25,7 @@ git branch release/0.1.0
 
 Second Update package.json and specify the version you are releasing
 
-Next Tag and push to travis
+Next Tag and push to github
 
 ```
 git tag v0.1.0
