@@ -23,12 +23,10 @@ jobs:
       - run: npm run prettier
       - run: npm run test
       - run: npm run coverage
-
-      # Re-enable once there are some tests
-      # - name: Coveralls
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   dependabot-auto-merge:
     runs-on: ubuntu-latest
