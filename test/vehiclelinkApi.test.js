@@ -9,7 +9,9 @@ const configHeaders = {
 
 describe('errorHandling', () => {
   beforeEach(() => {
-    nock(host, { reqHeaders: configHeaders }).get('/makes').reply(500, []);
+    nock(host, { reqHeaders: configHeaders })
+      .get('/makes')
+      .reply(422, { error: 'Test error' });
 
     nock(host, { reqHeaders: configHeaders })
       .get('/families?make_code=TOYO')
@@ -28,7 +30,7 @@ describe('errorHandling', () => {
 
   it('should handle errors when fetch makes', (done) => {
     new VehiclelinkApi(host, bearerToken).fetchMakes().catch((err) => {
-      expect(err.response.status).toEqual(500);
+      expect(err.response.status).toEqual(422);
       done();
     });
   });
