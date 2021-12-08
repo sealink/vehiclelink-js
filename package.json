@@ -59,5 +59,8 @@
     "setupFilesAfterEnv": [
       "<rootDir>/test/setupTests.js"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
