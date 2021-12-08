@@ -1,4 +1,4 @@
-const { default: ConfigApi } = require('../lib/configApi');
+const { default: VehiclelinkApi } = require('../lib/vehiclelinkApi');
 const nock = require('nock');
 
 const host = 'http://127.0.0.1:8000';
@@ -27,21 +27,21 @@ describe('errorHandling', () => {
   });
 
   it('should handle errors when fetch makes', (done) => {
-    new ConfigApi(host, bearerToken).fetchMakes().catch((err) => {
+    new VehiclelinkApi(host, bearerToken).fetchMakes().catch((err) => {
       expect(err.response.status).toEqual(500);
       done();
     });
   });
 
   it('should handle errors when fetch families', (done) => {
-    new ConfigApi(host, bearerToken).fetchFamilies('TOYO').catch((err) => {
+    new VehiclelinkApi(host, bearerToken).fetchFamilies('TOYO').catch((err) => {
       expect(err.response.status).toEqual(500);
       done();
     });
   });
 
   it('should handle errors when fetch vehicles', (done) => {
-    new ConfigApi(host, bearerToken)
+    new VehiclelinkApi(host, bearerToken)
       .fetchVehicles('TOYO', 'PRADO', 'Style 1')
       .catch((err) => {
         expect(err.response.status).toEqual(500);
@@ -63,7 +63,7 @@ describe('fetchMakes', () => {
   });
 
   it('should return a hash of makes', (done) => {
-    new ConfigApi(host, bearerToken).fetchMakes().then((makes) => {
+    new VehiclelinkApi(host, bearerToken).fetchMakes().then((makes) => {
       expect(makes).toHaveLength(2);
       expect(makes[0].description).toEqual('Toyota');
       expect(makes[1].description).toEqual('Mazda');
@@ -100,7 +100,7 @@ describe('fetchFamilies', () => {
   });
 
   it('should return a hash of families', (done) => {
-    new ConfigApi(host, bearerToken).fetchFamilies('TOYO').then((families) => {
+    new VehiclelinkApi(host, bearerToken).fetchFamilies('TOYO').then((families) => {
       expect(families).toHaveLength(2);
       expect(families[0].description).toEqual('PRADO');
       expect(families[0].body_styles).toHaveLength(2);
@@ -140,7 +140,7 @@ describe('fetchVehicles', () => {
   });
 
   it('should return a hash of families', (done) => {
-    new ConfigApi(host, bearerToken)
+    new VehiclelinkApi(host, bearerToken)
       .fetchVehicles('TOYO', 'PRADO', 'Style 1')
       .then((vehicles) => {
         expect(vehicles).toHaveLength(1);
