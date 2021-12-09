@@ -1,3 +1,6 @@
+## 0.1.1 Unreleased
+- [RB-96] Fix npm badge
+
 ## 0.1.0
 
 - [RB-109] Initial project setup
