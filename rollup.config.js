@@ -22,6 +22,7 @@ if (process.env.BUILD !== 'production') {
 export default {
   input: 'lib/index.js',
   plugins: plugins,
+  external: ['regenerator-runtime/runtime'],
   output: [
     {
       file: pkg.main,

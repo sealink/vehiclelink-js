@@ -29,6 +29,7 @@
     "url": "https://github.com/sealink/vehiclelink-js/issues"
   },
   "homepage": "https://github.com/sealink/vehiclelink-js#readme",
+  "dependencies": {},
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@rollup/plugin-node-resolve": "^13.0.6",
@@ -37,6 +38,7 @@
     "husky": "^7.0.4",
     "isomorphic-fetch": "^3.0.0",
     "jest": "^27.4.3",
+    "nock": "^13.0.0",
     "lint-staged": "^12.1.2",
     "prettier": "2.5.1",
     "rollup": "^2.60.2",
@@ -51,6 +53,12 @@
   "browserslist": "> 0.25%, not dead",
   "prettier": "@sealink/prettier-config",
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setupTests.js"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
