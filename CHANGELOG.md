@@ -1,4 +1,4 @@
-## 0.1.1 Unreleased
+## 0.1.1
 - [RB-96] Fix npm badge
 
 ## 0.1.0
