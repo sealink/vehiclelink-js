@@ -4,6 +4,7 @@ const nock = require('nock');
 const host = 'http://127.0.0.1:8000';
 const bearerToken = 'bearerToken';
 const configHeaders = {
+  'Content-Type': 'application/json',
   authorization: `Bearer ${bearerToken}`,
 };
 
