@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/%40sealink%2Fvehiclelink-js.svg)](https://badge.fury.io/js/%40sealink%2Fvehiclelink-js)
+[![npm version](https://badge.fury.io/js/%40sealink%2Fvehiclelink.svg)](https://badge.fury.io/js/%40sealink%2Fvehiclelink)
 [![Coverage Status](https://coveralls.io/repos/github/sealink/vehiclelink-js/badge.svg?branch=master)](https://coveralls.io/github/sealink/vehiclelink-js?branch=master)
 [![Build Status](https://github.com/sealink/vehiclelink-js/workflows/Build%20and%20Test/badge.svg?branch=master)](https://github.com/sealink/vehiclelink-js/actions)
 
