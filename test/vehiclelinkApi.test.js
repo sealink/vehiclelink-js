@@ -30,17 +30,21 @@ describe('errorHandling', () => {
   });
 
   it('should handle errors when fetch makes', (done) => {
-    new VehiclelinkApi(host, bearerToken).fetchMakes('vehicles').catch((err) => {
-      expect(err.response.status).toEqual(422);
-      done();
-    });
+    new VehiclelinkApi(host, bearerToken)
+      .fetchMakes('vehicles')
+      .catch((err) => {
+        expect(err.response.status).toEqual(422);
+        done();
+      });
   });
 
   it('should handle errors when fetch families', (done) => {
-    new VehiclelinkApi(host, bearerToken).fetchFamilies('vehicles', 'TOYO').catch((err) => {
-      expect(err.response.status).toEqual(500);
-      done();
-    });
+    new VehiclelinkApi(host, bearerToken)
+      .fetchFamilies('vehicles', 'TOYO')
+      .catch((err) => {
+        expect(err.response.status).toEqual(500);
+        done();
+      });
   });
 
   it('should handle errors when fetch vehicles', (done) => {
@@ -66,12 +70,14 @@ describe('fetchMakes', () => {
   });
 
   it('should return a hash of makes', (done) => {
-    new VehiclelinkApi(host, bearerToken).fetchMakes('vehicles').then((makes) => {
-      expect(makes).toHaveLength(2);
-      expect(makes[0].description).toEqual('Toyota');
-      expect(makes[1].description).toEqual('Mazda');
-      done();
-    });
+    new VehiclelinkApi(host, bearerToken)
+      .fetchMakes('vehicles')
+      .then((makes) => {
+        expect(makes).toHaveLength(2);
+        expect(makes[0].description).toEqual('Toyota');
+        expect(makes[1].description).toEqual('Mazda');
+        done();
+      });
   });
 });
 
