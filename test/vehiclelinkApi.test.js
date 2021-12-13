@@ -11,16 +11,16 @@ const configHeaders = {
 describe('errorHandling', () => {
   beforeEach(() => {
     nock(host, { reqHeaders: configHeaders })
-      .get('/makes')
+      .get('/segments/vehicles/makes')
       .reply(422, { error: 'Test error' });
 
     nock(host, { reqHeaders: configHeaders })
-      .get('/families?make_code=TOYO')
+      .get('/segments/vehicles/families?make_code=TOYO')
       .reply(500, []);
 
     nock(host, { reqHeaders: configHeaders })
       .get(
-        '/vehicles?make_code=TOYO&family_code=PRADO&body_style_description=Style+1'
+        '/segments/vehicles/vehicles?make_code=TOYO&family_code=PRADO&body_style_description=Style+1'
       )
       .reply(500, []);
   });
@@ -30,22 +30,26 @@ describe('errorHandling', () => {
   });
 
   it('should handle errors when fetch makes', (done) => {
-    new VehiclelinkApi(host, bearerToken).fetchMakes().catch((err) => {
-      expect(err.response.status).toEqual(422);
-      done();
-    });
+    new VehiclelinkApi(host, bearerToken)
+      .fetchMakes('vehicles')
+      .catch((err) => {
+        expect(err.response.status).toEqual(422);
+        done();
+      });
   });
 
   it('should handle errors when fetch families', (done) => {
-    new VehiclelinkApi(host, bearerToken).fetchFamilies('TOYO').catch((err) => {
-      expect(err.response.status).toEqual(500);
-      done();
-    });
+    new VehiclelinkApi(host, bearerToken)
+      .fetchFamilies('vehicles', 'TOYO')
+      .catch((err) => {
+        expect(err.response.status).toEqual(500);
+        done();
+      });
   });
 
   it('should handle errors when fetch vehicles', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchVehicles('TOYO', 'PRADO', 'Style 1')
+      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'Style 1')
       .catch((err) => {
         expect(err.response.status).toEqual(500);
         done();
@@ -61,17 +65,19 @@ describe('fetchMakes', () => {
     ];
 
     nock(host, { reqHeaders: configHeaders })
-      .get('/makes')
+      .get('/segments/vehicles/makes')
       .reply(200, makesResults);
   });
 
   it('should return a hash of makes', (done) => {
-    new VehiclelinkApi(host, bearerToken).fetchMakes().then((makes) => {
-      expect(makes).toHaveLength(2);
-      expect(makes[0].description).toEqual('Toyota');
-      expect(makes[1].description).toEqual('Mazda');
-      done();
-    });
+    new VehiclelinkApi(host, bearerToken)
+      .fetchMakes('vehicles')
+      .then((makes) => {
+        expect(makes).toHaveLength(2);
+        expect(makes[0].description).toEqual('Toyota');
+        expect(makes[1].description).toEqual('Mazda');
+        done();
+      });
   });
 });
 
@@ -98,13 +104,13 @@ describe('fetchFamilies', () => {
     ];
 
     nock(host, { reqHeaders: configHeaders })
-      .get('/families?make_code=TOYO')
+      .get('/segments/vehicles/families?make_code=TOYO')
       .reply(200, familiesResults);
   });
 
   it('should return a hash of families', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchFamilies('TOYO')
+      .fetchFamilies('vehicles', 'TOYO')
       .then((families) => {
         expect(families).toHaveLength(2);
         expect(families[0].description).toEqual('PRADO');
@@ -140,13 +146,13 @@ describe('fetchVehicles', () => {
     params.append('body_style_description', 'Style 1');
 
     nock(host, { reqHeaders: configHeaders })
-      .get(`/vehicles?${params}`)
+      .get(`/segments/vehicles/vehicles?${params}`)
       .reply(200, vehiclesResults);
   });
 
   it('should return a hash of families', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchVehicles('TOYO', 'PRADO', 'Style 1')
+      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'Style 1')
       .then((vehicles) => {
         expect(vehicles).toHaveLength(1);
         expect(vehicles[0].length_value).toEqual('5100');
