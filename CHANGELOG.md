@@ -1,4 +1,4 @@
-## Unreleased
+## 0.2.0
 
 - [RB-128] Update vehiclelink endpoints
 
