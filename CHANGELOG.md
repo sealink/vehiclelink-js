@@ -1,3 +1,7 @@
+## Unreleased
+
+- [RB-128] Update vehiclelink endpoints
+
 ## 0.1.1
 
 - [RB-96] Fix npm badge
