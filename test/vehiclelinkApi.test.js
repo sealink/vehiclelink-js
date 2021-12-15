@@ -10,6 +10,8 @@ const configHeaders = {
 
 describe('errorHandling', () => {
   beforeEach(() => {
+    nock(host, { reqHeaders: configHeaders }).get('/segments').reply(500, []);
+
     nock(host, { reqHeaders: configHeaders })
       .get('/segments/vehicles/makes')
       .reply(422, { error: 'Test error' });
@@ -27,6 +29,13 @@ describe('errorHandling', () => {
 
   afterEach(() => {
     nock.cleanAll();
+  });
+
+  it('should handle errors when fetch segments', (done) => {
+    new VehiclelinkApi(host, bearerToken).fetchSegments().catch((err) => {
+      expect(err.response.status).toEqual(500);
+      done();
+    });
   });
 
   it('should handle errors when fetch makes', (done) => {
@@ -54,6 +63,29 @@ describe('errorHandling', () => {
         expect(err.response.status).toEqual(500);
         done();
       });
+  });
+});
+
+describe('fetchSegments', () => {
+  beforeEach(() => {
+    const segmentsResults = [
+      { id: 1, code: 'vehicles', description: 'Redbook Light Vehicles' },
+      { id: 2, code: 'caravans', description: 'Redbook Caravans' },
+      { id: 3, code: 'marine', description: 'Redbook Marine' },
+    ];
+
+    nock(host, { reqHeaders: configHeaders })
+      .get('/segments')
+      .reply(200, segmentsResults);
+  });
+
+  it('should return a hash of segments', (done) => {
+    new VehiclelinkApi(host, bearerToken).fetchSegments().then((segments) => {
+      expect(segments).toHaveLength(3);
+      expect(segments[0].description).toEqual('Redbook Light Vehicles');
+      expect(segments[1].code).toEqual('caravans');
+      done();
+    });
   });
 });
 
