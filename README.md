@@ -8,6 +8,7 @@ Provides a wrapper api which hides the underlying vehiclelink services.
 
 ### VehiclelinkApi
 
+- fetchSegments
 - fetchMakes
 - fetchfamilies
 - fetchVehicles

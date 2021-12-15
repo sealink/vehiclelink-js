@@ -1,3 +1,7 @@
+## Unreleased
+
+- [RB-129] Add segments fetch
+
 ## 0.2.0
 
 - [RB-128] Update vehiclelink endpoints
