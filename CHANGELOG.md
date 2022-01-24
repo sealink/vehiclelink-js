@@ -1,3 +1,7 @@
+## 0.4.0 Unreleased
+
+- [RB-175] Replace `body_style_description` with `body_style_code`
+
 ## 0.3.0
 
 - [RB-129] Add segments fetch
