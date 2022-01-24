@@ -22,7 +22,7 @@ describe('errorHandling', () => {
 
     nock(host, { reqHeaders: configHeaders })
       .get(
-        '/segments/vehicles/vehicles?make_code=TOYO&family_code=PRADO&body_style_description=Style+1'
+        '/segments/vehicles/vehicles?make_code=TOYO&family_code=PRADO&body_style_code=STYLE_1'
       )
       .reply(500, []);
   });
@@ -58,7 +58,7 @@ describe('errorHandling', () => {
 
   it('should handle errors when fetch vehicles', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'Style 1')
+      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'STYLE_1')
       .catch((err) => {
         expect(err.response.status).toEqual(500);
         done();
@@ -69,9 +69,9 @@ describe('errorHandling', () => {
 describe('fetchSegments', () => {
   beforeEach(() => {
     const segmentsResults = [
-      { id: 1, code: 'vehicles', description: 'Redbook Light Vehicles' },
-      { id: 2, code: 'caravans', description: 'Redbook Caravans' },
-      { id: 3, code: 'marine', description: 'Redbook Marine' },
+      { code: 'vehicles', description: 'Redbook Light Vehicles' },
+      { code: 'caravans', description: 'Redbook Caravans' },
+      { code: 'marine', description: 'Redbook Marine' },
     ];
 
     nock(host, { reqHeaders: configHeaders })
@@ -92,8 +92,8 @@ describe('fetchSegments', () => {
 describe('fetchMakes', () => {
   beforeEach(() => {
     const makesResults = [
-      { id: 1, code: 'TOYO', description: 'Toyota' },
-      { id: 2, code: 'MAZD', description: 'Mazda' },
+      { code: 'TOYO', description: 'Toyota' },
+      { code: 'MAZD', description: 'Mazda' },
     ];
 
     nock(host, { reqHeaders: configHeaders })
@@ -122,8 +122,8 @@ describe('fetchFamilies', () => {
         make_code: 'TOYO',
         description: 'PRADO',
         body_styles: [
-          { id: 1, description: 'Style 1' },
-          { id: 2, description: 'Style 2' },
+          { code: 'STYLE_1', description: 'Style 1' },
+          { code: 'STYLE_2', description: 'Style 2' },
         ],
       },
       {
@@ -160,7 +160,7 @@ describe('fetchVehicles', () => {
         id: 1,
         make_code: 'TOYO',
         family_code: 'PRADO',
-        body_style_description: 'Style 1',
+        body_style_code: 'STYLE_1',
         length_value: '5100',
         width_value: '1600',
         height_value: '2000',
@@ -175,7 +175,7 @@ describe('fetchVehicles', () => {
     const params = new URLSearchParams();
     params.append('make_code', 'TOYO');
     params.append('family_code', 'PRADO');
-    params.append('body_style_description', 'Style 1');
+    params.append('body_style_code', 'STYLE_1');
 
     nock(host, { reqHeaders: configHeaders })
       .get(`/segments/vehicles/vehicles?${params}`)
@@ -184,7 +184,7 @@ describe('fetchVehicles', () => {
 
   it('should return a hash of families', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'Style 1')
+      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'STYLE_1')
       .then((vehicles) => {
         expect(vehicles).toHaveLength(1);
         expect(vehicles[0].length_value).toEqual('5100');
