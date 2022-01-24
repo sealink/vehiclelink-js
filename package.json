@@ -10,8 +10,8 @@
     "watch": "rollup -c -w",
     "pretest": "rollup -c",
     "prepublish": "BUILD=production npm test",
-    "test": "jest --passWithNoTests",
-    "coverage": "jest --coverage --passWithNoTests",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "prettier": "prettier --ignore-unknown --check *",
     "prettier:write": "prettier --ignore-unknown --write *",
     "prepare": "husky install"
