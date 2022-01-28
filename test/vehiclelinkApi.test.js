@@ -206,7 +206,8 @@ describe('requestOptionsHandling', () => {
   });
 
   it('should abort request', (done) => {
-    new VehiclelinkApi(host, bearerToken).fetchSegments({ signal })
+    new VehiclelinkApi(host, bearerToken)
+      .fetchSegments({ signal })
       .catch((err) => {
         expect(err).toEqual(new Error('The user aborted a request.'));
         done();
