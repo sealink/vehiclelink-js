@@ -1,3 +1,7 @@
+## Unreleased
+
+- [RB-184] Add support for abort signal
+
 ## 0.4.0
 
 - [RB-175] Replace `body_style_description` with `body_style_code`
