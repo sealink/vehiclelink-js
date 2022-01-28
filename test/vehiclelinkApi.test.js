@@ -192,3 +192,25 @@ describe('fetchVehicles', () => {
       });
   });
 });
+
+describe('requestOptionsHandling', () => {
+  const controller = new AbortController();
+  const { signal } = controller;
+
+  beforeEach(() => {
+    nock(host).get('/segments').delay(10000).reply(200, `Passed`);
+  });
+
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
+  it('should abort request', (done) => {
+    new VehiclelinkApi(host, bearerToken).fetchSegments({ signal })
+      .catch((err) => {
+        expect(err).toEqual(new Error('The user aborted a request.'));
+        done();
+      });
+    controller.abort();
+  });
+});
