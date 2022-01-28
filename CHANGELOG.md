@@ -1,4 +1,4 @@
-## Unreleased
+## 0.5.0
 
 - [RB-184] Add support for abort signal
 
