@@ -172,22 +172,64 @@ describe('fetchVehicles', () => {
       },
     ];
 
+    const vehiclesResultsWithDifferentUnits = [
+      {
+        id: 1,
+        make_code: 'TOYO',
+        family_code: 'PRADO',
+        body_style_code: 'STYLE_1',
+        length_value: '5.1',
+        width_value: '1.6',
+        height_value: '2.0',
+        size_unit: 'm',
+        weight_value: '1.2',
+        weight_unit: 't',
+        start_year: '1990',
+        end_year: '2010',
+      },
+    ];
+
     const params = new URLSearchParams();
     params.append('make_code', 'TOYO');
     params.append('family_code', 'PRADO');
     params.append('body_style_code', 'STYLE_1');
 
+    const paramsWithUnits = new URLSearchParams();
+    paramsWithUnits.append('make_code', 'TOYO');
+    paramsWithUnits.append('family_code', 'PRADO');
+    paramsWithUnits.append('body_style_code', 'STYLE_1');
+    paramsWithUnits.append('size_unit', 'm');
+    paramsWithUnits.append('weight_unit', 't');
+
     nock(host, { reqHeaders: configHeaders })
       .get(`/segments/vehicles/vehicles?${params}`)
       .reply(200, vehiclesResults);
+
+    nock(host, { reqHeaders: configHeaders })
+      .get(`/segments/vehicles/vehicles?${paramsWithUnits}`)
+      .reply(200, vehiclesResultsWithDifferentUnits);
   });
 
-  it('should return a hash of families', (done) => {
+  it('should return a hash of vehicles', (done) => {
     new VehiclelinkApi(host, bearerToken)
       .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'STYLE_1')
       .then((vehicles) => {
         expect(vehicles).toHaveLength(1);
         expect(vehicles[0].length_value).toEqual('5100');
+        expect(vehicles[0].size_unit).toEqual('mm');
+        done();
+      });
+  });
+
+  it('should return a hash of vehicles with different units', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'STYLE_1', 'm', 't')
+      .then((vehicles) => {
+        expect(vehicles).toHaveLength(1);
+        expect(vehicles[0].length_value).toEqual('5.1');
+        expect(vehicles[0].size_unit).toEqual('m');
+        expect(vehicles[0].weight_value).toEqual('1.2');
+        expect(vehicles[0].weight_unit).toEqual('t');
         done();
       });
   });
