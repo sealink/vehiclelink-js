@@ -257,3 +257,49 @@ describe('requestOptionsHandling', () => {
     controller.abort();
   });
 });
+
+describe('fetchAttachments', () => {
+  beforeEach(() => {
+    const attachmentResults = [
+      {
+        id: 1,
+        description: 'Roof Cargo - under 30cm high',
+        category_id: 'roof',
+        length_value: '0',
+        height_value: '30',
+        width_value: '0',
+        size_unit: 'cm',
+        weight_value: '30',
+        weight_unit: 'kg',
+      },
+      {
+        id: 3,
+        description: 'Bull Bar',
+        category_id: 'rear',
+        length_value: '35',
+        height_value: '0',
+        width_value: '0',
+        size_unit: 'cm',
+        weight_value: '40',
+        weight_unit: 'kg',
+      },
+    ];
+
+    nock(host, { reqHeaders: configHeaders })
+      .get('/attachments')
+      .reply(200, attachmentResults);
+  });
+
+  it('should return an array of vehicle attachments', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchAttachments()
+      .then((attachments) => {
+        expect(attachments).toHaveLength(2);
+        expect(attachments[0].height_value).toEqual('30');
+        expect(attachments[0].size_unit).toEqual('cm');
+        expect(attachments[1].weight_value).toEqual('40');
+        expect(attachments[1].weight_unit).toEqual('kg');
+        done();
+      });
+  });
+});
