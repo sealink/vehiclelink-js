@@ -2,6 +2,7 @@
 
 - [RB-184] Add support for abort signal
 - [RB-205] Add support for unit selection
+- [RB-210] Add support for vehicle attachments
 
 ## 0.4.0
 
