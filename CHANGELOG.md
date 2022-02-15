@@ -1,4 +1,4 @@
-## Unreleased
+## 0.5.1
 
 - [RB-184] Add support for abort signal
 - [RB-205] Add support for unit selection
