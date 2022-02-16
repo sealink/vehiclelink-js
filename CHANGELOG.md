@@ -1,6 +1,7 @@
 ## Unreleased
 
 - [RB-211] Fix changelog
+- [RB-210] Add support for vehicle attachments
 
 ## 0.5.1
 

@@ -12,6 +12,7 @@ Provides a wrapper api which hides the underlying vehiclelink services.
 - fetchMakes
 - fetchfamilies
 - fetchVehicles
+- fetchAttachments
 
 ### Deployment
 
