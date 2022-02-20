@@ -22,7 +22,7 @@ Package management is via NPM.
 First create the release branch
 
 ```
-git branch release/0.1.0
+git branch release/0.1.x
 ```
 
 Second Update package.json and specify the version you are releasing
