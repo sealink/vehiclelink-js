@@ -285,9 +285,31 @@ describe('fetchAttachments', () => {
       },
     ];
 
+    const attachmentResultsWithDifferentUnit = [
+      {
+        id: 1,
+        description: 'Roof Cargo - under 30cm high',
+        category_id: 'roof',
+        length_value: '0',
+        height_value: '0.3',
+        width_value: '0',
+        size_unit: 'm',
+        weight_value: '0.03',
+        weight_unit: 't',
+      },
+    ];
+
+    const paramsWithUnits = new URLSearchParams();
+    paramsWithUnits.append('size_unit', 'm');
+    paramsWithUnits.append('weight_unit', 't');
+
     nock(host, { reqHeaders: configHeaders })
-      .get('/attachments')
+      .get('/attachments?')
       .reply(200, attachmentResults);
+
+    nock(host, { reqHeaders: configHeaders })
+      .get(`/attachments?${paramsWithUnits}`)
+      .reply(200, attachmentResultsWithDifferentUnit);
   });
 
   it('should return an array of vehicle attachments', (done) => {
@@ -299,6 +321,19 @@ describe('fetchAttachments', () => {
         expect(attachments[0].size_unit).toEqual('cm');
         expect(attachments[1].weight_value).toEqual('40');
         expect(attachments[1].weight_unit).toEqual('kg');
+        done();
+      });
+  });
+
+  it('should return an array of vehicle attachments with different units', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchAttachments('m', 't')
+      .then((attachments) => {
+        expect(attachments).toHaveLength(1);
+        expect(attachments[0].height_value).toEqual('0.3');
+        expect(attachments[0].size_unit).toEqual('m');
+        expect(attachments[0].weight_value).toEqual('0.03');
+        expect(attachments[0].weight_unit).toEqual('t');
         done();
       });
   });
