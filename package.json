@@ -1,6 +1,6 @@
 {
   "name": "@sealink/vehiclelink",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "VehicleLink JS SDK",
   "main": "dist/vehiclelink.js",
   "module": "dist/vehiclelink.mjs",
