@@ -1,3 +1,7 @@
+## Unreleased
+
+- [RB-247] Support unit change in attachments fetching
+
 ## 0.6.0
 
 - [RB-211] Fix changelog
