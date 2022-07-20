@@ -311,11 +311,13 @@ describe('fetchVariants', () => {
     params.append('make_code', 'TOYO');
     params.append('family_code', 'PRADO');
     params.append('body_style_code', 'STYLE_1');
+    params.append('year_code', '2010');
 
     const paramsWithUnits = new URLSearchParams();
     paramsWithUnits.append('make_code', 'TOYO');
     paramsWithUnits.append('family_code', 'PRADO');
     paramsWithUnits.append('body_style_code', 'STYLE_1');
+    paramsWithUnits.append('year_code', '2010');
     paramsWithUnits.append('size_unit', 'm');
     paramsWithUnits.append('weight_unit', 't');
 
