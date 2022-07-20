@@ -1,4 +1,4 @@
-## 0.8.1 Unreleased
+## 0.8.1
 
 - [RB-363] Add Year code
 
