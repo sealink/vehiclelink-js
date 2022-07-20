@@ -235,6 +235,133 @@ describe('fetchVehicles', () => {
   });
 });
 
+describe('fetchVariant', () => {
+  beforeEach(() => {
+    const variantResult = {
+      id: 1,
+      make_code: 'TOYO',
+      family_code: 'PRADO',
+      body_style_code: 'STYLE_1',
+      length_value: '5100',
+      width_value: '1600',
+      height_value: '2000',
+      size_unit: 'mm',
+      weight_value: '1200',
+      weight_unit: 'kg',
+      year_code: '2010',
+      description: 'Variant 1',
+      variant_code: 'PRADO',
+    };
+
+    nock(host, { reqHeaders: configHeaders })
+      .get(`/segments/vehicles/variants/PRADO`)
+      .reply(200, variantResult);
+  });
+
+  it('should return the variant', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchVariant('vehicles', 'PRADO')
+      .then((vehicle) => {
+        expect(vehicle.length_value).toEqual('5100');
+        expect(vehicle.size_unit).toEqual('mm');
+        done();
+      });
+  });
+});
+
+describe('fetchVariants', () => {
+  beforeEach(() => {
+    const variantResults = [
+      {
+        id: 1,
+        make_code: 'TOYO',
+        family_code: 'PRADO',
+        body_style_code: 'STYLE_1',
+        length_value: '5100',
+        width_value: '1600',
+        height_value: '2000',
+        size_unit: 'mm',
+        weight_value: '1200',
+        weight_unit: 'kg',
+        year_code: '2010',
+        description: 'Variant 1',
+        variant_code: 'CODE_1',
+      },
+    ];
+
+    const variantResultsWithDifferentUnits = [
+      {
+        id: 1,
+        make_code: 'TOYO',
+        family_code: 'PRADO',
+        body_style_code: 'STYLE_1',
+        length_value: '5.1',
+        width_value: '1.6',
+        height_value: '2.0',
+        size_unit: 'm',
+        weight_value: '1.2',
+        weight_unit: 't',
+        year_code: '2010',
+        description: 'Variant 1',
+        variant_code: 'CODE_1',
+      },
+    ];
+
+    const params = new URLSearchParams();
+    params.append('make_code', 'TOYO');
+    params.append('family_code', 'PRADO');
+    params.append('body_style_code', 'STYLE_1');
+
+    const paramsWithUnits = new URLSearchParams();
+    paramsWithUnits.append('make_code', 'TOYO');
+    paramsWithUnits.append('family_code', 'PRADO');
+    paramsWithUnits.append('body_style_code', 'STYLE_1');
+    paramsWithUnits.append('size_unit', 'm');
+    paramsWithUnits.append('weight_unit', 't');
+
+    nock(host, { reqHeaders: configHeaders })
+      .get(`/segments/vehicles/variants?${params}`)
+      .reply(200, variantResults);
+
+    nock(host, { reqHeaders: configHeaders })
+      .get(`/segments/vehicles/variants?${paramsWithUnits}`)
+      .reply(200, variantResultsWithDifferentUnits);
+  });
+
+  it('should return a hash of variants', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchVariants('vehicles', 'TOYO', 'PRADO', 'STYLE_1', '2010')
+      .then((vehicles) => {
+        expect(vehicles).toHaveLength(1);
+        expect(vehicles[0].length_value).toEqual('5100');
+        expect(vehicles[0].size_unit).toEqual('mm');
+        done();
+      });
+  });
+
+  it('should return a hash of variants with different units', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchVariants(
+        'vehicles',
+        'TOYO',
+        'PRADO',
+        'STYLE_1',
+        '2010',
+        null,
+        'm',
+        't'
+      )
+      .then((vehicles) => {
+        expect(vehicles).toHaveLength(1);
+        expect(vehicles[0].length_value).toEqual('5.1');
+        expect(vehicles[0].size_unit).toEqual('m');
+        expect(vehicles[0].weight_value).toEqual('1.2');
+        expect(vehicles[0].weight_unit).toEqual('t');
+        done();
+      });
+  });
+});
+
 describe('requestOptionsHandling', () => {
   const controller = new AbortController();
   const { signal } = controller;
