@@ -1,3 +1,7 @@
+## 0.8.2 unreleased
+
+- [RB-368] Rename `minimum_seat_capacity` to `seat_capacity`
+
 ## 0.8.1
 
 - [RB-363] Add Year code
