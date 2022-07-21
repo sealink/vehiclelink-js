@@ -1,4 +1,4 @@
-## 0.8.2 unreleased
+## 0.8.2
 
 - [RB-368] Rename `minimum_seat_capacity` to `seat_capacity`
 
