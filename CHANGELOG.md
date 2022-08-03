@@ -1,4 +1,12 @@
-## 0.8.1 Unreleased
+## Unreleased
+
+- [RB-381] _Breaking_ all optional parameters are now passed in the opts hash
+- [RB-381] Add ability to sort vehicles by direction and column
+
+## 0.8.2
+
+- [RB-368] Rename `minimum_seat_capacity` to `seat_capacity`
+
 ## 0.8.1
 
 - [RB-363] Add Year code

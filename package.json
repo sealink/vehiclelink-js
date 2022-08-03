@@ -1,6 +1,6 @@
 {
   "name": "@sealink/vehiclelink",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "VehicleLink JS SDK",
   "main": "dist/vehiclelink.js",
   "module": "dist/vehiclelink.mjs",
@@ -29,7 +29,6 @@
     "url": "https://github.com/sealink/vehiclelink-js/issues"
   },
   "homepage": "https://github.com/sealink/vehiclelink-js#readme",
-  "dependencies": {},
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@rollup/plugin-node-resolve": "^13.0.6",
@@ -37,9 +36,10 @@
     "coveralls": "^3.1.1",
     "husky": "^8.0.0",
     "isomorphic-fetch": "^3.0.0",
-    "jest": "^27.4.3",
-    "nock": "^13.0.0",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "^13.0.0",
+    "nock": "^13.0.0",
     "prettier": "2.7.1",
     "rollup": "^2.60.2",
     "rollup-plugin-babel": "^4.4.0",
