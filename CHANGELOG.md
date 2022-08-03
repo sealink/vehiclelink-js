@@ -1,4 +1,4 @@
-## Unreleased
+## 1.0.0
 
 - [RB-381] _Breaking_ all optional parameters are now passed in the opts hash
 - [RB-381] Add ability to sort vehicles by direction and column
