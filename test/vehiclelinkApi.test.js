@@ -189,6 +189,23 @@ describe('fetchVehicles', () => {
       },
     ];
 
+    const vehiclesResultsWithDifferentOrder = [
+      {
+        id: 1,
+        make_code: 'TOYO',
+        family_code: 'PRADO',
+        body_style_code: 'STYLE_1',
+        length_value: '5.1',
+        width_value: '1.6',
+        height_value: '2.0',
+        size_unit: 'm',
+        weight_value: '1.2',
+        weight_unit: 't',
+        start_year: '1990',
+        end_year: '2010',
+      },
+    ];
+
     const params = new URLSearchParams();
     params.append('make_code', 'TOYO');
     params.append('family_code', 'PRADO');
@@ -201,6 +218,15 @@ describe('fetchVehicles', () => {
     paramsWithUnits.append('size_unit', 'm');
     paramsWithUnits.append('weight_unit', 't');
 
+    const paramsWithOrder = new URLSearchParams();
+    paramsWithOrder.append('make_code', 'TOYO');
+    paramsWithOrder.append('family_code', 'PRADO');
+    paramsWithOrder.append('body_style_code', 'STYLE_1');
+    paramsWithOrder.append('size_unit', 'm');
+    paramsWithOrder.append('weight_unit', 't');
+    paramsWithOrder.append('order_by', 'end_year');
+    paramsWithOrder.append('order_direction', 'ASC');
+
     nock(host, { reqHeaders: configHeaders })
       .get(`/segments/vehicles/vehicles?${params}`)
       .reply(200, vehiclesResults);
@@ -208,6 +234,10 @@ describe('fetchVehicles', () => {
     nock(host, { reqHeaders: configHeaders })
       .get(`/segments/vehicles/vehicles?${paramsWithUnits}`)
       .reply(200, vehiclesResultsWithDifferentUnits);
+
+    nock(host, { reqHeaders: configHeaders })
+      .get(`/segments/vehicles/vehicles?${paramsWithOrder}`)
+      .reply(200, vehiclesResultsWithDifferentOrder);
   });
 
   it('should return a hash of vehicles', (done) => {
@@ -223,7 +253,28 @@ describe('fetchVehicles', () => {
 
   it('should return a hash of vehicles with different units', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'STYLE_1', 'm', 't')
+      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'STYLE_1', {
+        sizeUnit: 'm',
+        weightUnit: 't',
+      })
+      .then((vehicles) => {
+        expect(vehicles).toHaveLength(1);
+        expect(vehicles[0].length_value).toEqual('5.1');
+        expect(vehicles[0].size_unit).toEqual('m');
+        expect(vehicles[0].weight_value).toEqual('1.2');
+        expect(vehicles[0].weight_unit).toEqual('t');
+        done();
+      });
+  });
+
+  it('should return a hash of vehicles with a different sort order', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchVehicles('vehicles', 'TOYO', 'PRADO', 'STYLE_1', {
+        sizeUnit: 'm',
+        weightUnit: 't',
+        orderBy: 'end_year',
+        orderDirection: 'ASC',
+      })
       .then((vehicles) => {
         expect(vehicles).toHaveLength(1);
         expect(vehicles[0].length_value).toEqual('5.1');
@@ -307,6 +358,24 @@ describe('fetchVariants', () => {
       },
     ];
 
+    const variantResultsWithDifferentOrder = [
+      {
+        id: 1,
+        make_code: 'TOYO',
+        family_code: 'PRADO',
+        body_style_code: 'STYLE_1',
+        length_value: '5.1',
+        width_value: '1.6',
+        height_value: '2.0',
+        size_unit: 'm',
+        weight_value: '1.2',
+        weight_unit: 't',
+        year_code: '2010',
+        description: 'Variant 1',
+        variant_code: 'CODE_1',
+      },
+    ];
+
     const params = new URLSearchParams();
     params.append('make_code', 'TOYO');
     params.append('family_code', 'PRADO');
@@ -321,6 +390,15 @@ describe('fetchVariants', () => {
     paramsWithUnits.append('size_unit', 'm');
     paramsWithUnits.append('weight_unit', 't');
 
+    const paramsWithSeatCapacity = new URLSearchParams();
+    paramsWithSeatCapacity.append('make_code', 'TOYO');
+    paramsWithSeatCapacity.append('family_code', 'PRADO');
+    paramsWithSeatCapacity.append('body_style_code', 'STYLE_1');
+    paramsWithSeatCapacity.append('year_code', '2010');
+    paramsWithSeatCapacity.append('size_unit', 'm');
+    paramsWithSeatCapacity.append('weight_unit', 't');
+    paramsWithSeatCapacity.append('seat_capacity', '7');
+
     nock(host, { reqHeaders: configHeaders })
       .get(`/segments/vehicles/variants?${params}`)
       .reply(200, variantResults);
@@ -328,6 +406,10 @@ describe('fetchVariants', () => {
     nock(host, { reqHeaders: configHeaders })
       .get(`/segments/vehicles/variants?${paramsWithUnits}`)
       .reply(200, variantResultsWithDifferentUnits);
+
+    nock(host, { reqHeaders: configHeaders })
+      .get(`/segments/vehicles/variants?${paramsWithSeatCapacity}`)
+      .reply(200, variantResultsWithDifferentOrder);
   });
 
   it('should return a hash of variants', (done) => {
@@ -343,16 +425,27 @@ describe('fetchVariants', () => {
 
   it('should return a hash of variants with different units', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchVariants(
-        'vehicles',
-        'TOYO',
-        'PRADO',
-        'STYLE_1',
-        '2010',
-        null,
-        'm',
-        't'
-      )
+      .fetchVariants('vehicles', 'TOYO', 'PRADO', 'STYLE_1', '2010', {
+        sizeUnit: 'm',
+        weightUnit: 't',
+      })
+      .then((vehicles) => {
+        expect(vehicles).toHaveLength(1);
+        expect(vehicles[0].length_value).toEqual('5.1');
+        expect(vehicles[0].size_unit).toEqual('m');
+        expect(vehicles[0].weight_value).toEqual('1.2');
+        expect(vehicles[0].weight_unit).toEqual('t');
+        done();
+      });
+  });
+
+  it('should return a hash of variants with a seat capacity', (done) => {
+    new VehiclelinkApi(host, bearerToken)
+      .fetchVariants('vehicles', 'TOYO', 'PRADO', 'STYLE_1', '2010', {
+        sizeUnit: 'm',
+        weightUnit: 't',
+        seatCapacity: 7,
+      })
       .then((vehicles) => {
         expect(vehicles).toHaveLength(1);
         expect(vehicles[0].length_value).toEqual('5.1');
@@ -456,7 +549,7 @@ describe('fetchAttachments', () => {
 
   it('should return an array of vehicle attachments with different units', (done) => {
     new VehiclelinkApi(host, bearerToken)
-      .fetchAttachments('m', 't')
+      .fetchAttachments({ sizeUnit: 'm', weightUnit: 't' })
       .then((attachments) => {
         expect(attachments).toHaveLength(1);
         expect(attachments[0].height_value).toEqual('0.3');
