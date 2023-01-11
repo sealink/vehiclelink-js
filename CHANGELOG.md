@@ -1,3 +1,7 @@
+## Unreleased
+
+- [PLAT-1171] Release with Node 18, no longer install npm@7 during build
+
 ## 1.0.0
 
 - [RB-381] _Breaking_ all optional parameters are now passed in the opts hash
