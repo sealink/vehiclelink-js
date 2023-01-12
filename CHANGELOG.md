@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0
 
 - [PLAT-1171] Release with Node 18, no longer install npm@7 during build
 
